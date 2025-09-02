@@ -93,10 +93,51 @@ function renderMatches(grouped){
         h.textContent = m.title;
         wrap.appendChild(h);
         host.appendChild(wrap);
+        // Add click to show modal
+        wrap.addEventListener('click', function(e) {
+          showMatchModal(m);
+        });
       }
-      // Update teams in place
-      // Remove/add only as needed
-      let teamRows = Array.from(wrap.querySelectorAll('.team'));
+  // Update teams in place
+  // Remove/add only as needed
+  let teamRows = Array.from(wrap.querySelectorAll('.team'));
+  // Also update click handler if already exists
+  wrap.onclick = function(e) { showMatchModal(m); };
+// Show match details in a fullscreen modal
+function showMatchModal(match) {
+  const modal = document.getElementById('matchModal');
+  const modalBody = document.getElementById('modalBody');
+  modalBody.innerHTML = '';
+  // Title
+  const h = document.createElement('h4');
+  h.textContent = match.title;
+  modalBody.appendChild(h);
+  // Teams
+  match.teams.forEach(t => {
+    const row = document.createElement('div');
+    row.className = 'team';
+    const name = document.createElement('div');
+    name.className = 'name';
+    name.textContent = t.team || '-';
+    const score = document.createElement('div');
+    score.className = 'score';
+    score.textContent = t.score || '-';
+    row.appendChild(name);
+    row.appendChild(score);
+    modalBody.appendChild(row);
+  });
+  modal.style.display = 'flex';
+}
+
+// Modal close logic
+document.addEventListener('DOMContentLoaded', function() {
+  const modal = document.getElementById('matchModal');
+  const close = document.getElementById('modalClose');
+  if(close) close.onclick = function() { modal.style.display = 'none'; };
+  window.onclick = function(event) {
+    if(event.target === modal) modal.style.display = 'none';
+  };
+});
       // Remove extra rows
       while(teamRows.length > m.teams.length){
         teamRows.pop().remove();
