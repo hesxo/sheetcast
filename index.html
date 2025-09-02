@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Real‑Time Tournament Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <h1>Tourism Trivia Challenge 2025  </h1>
+      <!--<div class="sub">Auto-updating from Google Sheets</div>-->
+      <div class="actions">
+        <button id="refreshBtn" class="btn">⟳ Refresh</button>
+        <label class="select">
+          <span>Auto</span>
+          <select id="refreshSelect">
+            <option value="5">5s</option>
+            <option value="10" selected>10s</option>
+            <option value="30">30s</option>
+            <option value="60">1m</option>
+            <option value="0">Off</option>
+          </select>
+        </label>
+      </div>
+    </header>
+
+    <section class="grid">
+      <article class="card">
+        <div class="card-title">Round 1 - Picture Round</div>
+        <div id="round1" class="matches"></div>
+      </article>
+
+      <article class="card">
+        <div class="card-title">Round 2 - Multiple Choice</div>
+        <div id="round2" class="matches"></div>
+      </article>
+
+      <article class="card">
+        <div class="card-title">Round 3 - Rapid Fire</div>
+        <div id="round3" class="matches"></div>
+      </article>
+          <script>
+            setTimeout(function() {
+              location.reload();
+            }, 60000); // 60,000 ms = 60 seconds
+          </script>
+    </section>
+
+    <section class="card wide">
+      <div class="card-title with-icon">🥇 Live Leaderboard</div>
+      <div id="leaderboard" class="leaderboard"></div>
+      <div class="meta">
+        <span id="lastUpdated">Last updated: --</span>
+        <span id="sheetStatus"></span>
+      </div>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
